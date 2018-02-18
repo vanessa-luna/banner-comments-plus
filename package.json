@@ -1,0 +1,210 @@
+{
+    "name": "banner-comments-plus",
+    "displayName": "Banner Comments +",
+    "description": "Figlet Font Banner Comments (ascii fonts)",
+    "version": "0.0.1",
+    "publisher": "lunarlimbo",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/lunar_limbo/banner_comments_plus.git"
+    },
+    "engines": {
+        "vscode": "^1.20.0"
+    },
+    "categories": [
+        "Formatters",
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:banner-comments-plus.Apply",
+        "onCommand:banner-comments-plus.ApplyFromList",
+        "onCommand:banner-comments-plus.ApplyFromFavorites",
+        "onCommand:banner-comments-plus.ApplyFromConfig",
+        "onCommand:banner-comments-plus.ApplyDirectFromConfig",
+        "onCommand:banner-comments-plus.SetDefaultFont",
+        "onCommand:banner-comments-plus.SetDefaultFontFromFavorites",
+        "onCommand:banner-comments-plus.AddFontToFavorites",
+        "onCommand:banner-comments-plus.AddCurrentFontToFavorites",
+        "onCommand:banner-comments-plus.RemoveFontFromFavorites"
+    ],
+    "main": "./out/extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "banner-comments-plus.Apply",
+                "when": "editorTextFocus && !editorReadonly",
+                "title": "BannerComments+: Apply"
+            },
+            {
+                "command": "banner-comments-plus.ApplyFromList",
+                "when": "editorTextFocus && !editorReadonly",
+                "title": "BannerComments+: Apply From List of Fonts"
+            },
+            {
+                "command": "banner-comments-plus.ApplyFromFavorites",
+                "when": "editorTextFocus && !editorReadonly",
+                "title": "BannerComments+: Apply From Favorites"
+            },
+            {
+                "command": "banner-comments-plus.ApplyFromConfig",
+                "when": "editorTextFocus && !editorReadonly",
+                "title": "BannerComments+: Apply From Config"
+            },
+            {
+                "command": "banner-comments-plus.ApplyDirectFromConfig",
+                "when": "editorTextFocus && !editorReadonly",
+                "title": "BannerComments+: Apply Direct From Config [use with geddski.macros]"
+            },
+            {
+                "command": "banner-comments-plus.SetDefaultFont",
+                "title": "BannerComments+: Set Default Font"
+            },
+            {
+                "command": "banner-comments-plus.SetDefaultFontFromFavorites",
+                "title": "BannerComments+: Set Default Font From Favorites"
+            },
+            {
+                "command": "banner-comments-plus.AddFontToFavorites",
+                "title": "BannerComments+: Add Font To Favorites"
+            },
+            {
+                "command": "banner-comments-plus.AddCurrentFontToFavorites",
+                "title": "BannerComments+: Quick Add Current Default Font To Favorites"
+            },
+            {
+                "command": "banner-comments-plus.RemoveFontFromFavorites",
+                "title": "BannerComments+: Remove Font From Favorites"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Banner comments +",
+            "properties": {
+                "banner-comments-plus.configs": {
+                    "type": "object",
+                    "default": {},
+                    "description": "Hash of stored configs for quick use",
+                    "items": {
+                        "type": "object",
+                        "title": "Config for BC+",
+                        "properties": {
+                            "font": {
+                                "type": "string",
+                                "description": "Name of Figlet Font"
+                            },
+                            "horizontalLayout": {
+                                "type": "string",
+                                "description": "Figlet control\n ['default', full', 'fitted', 'controlled smushing', and 'universal smushing']"
+                            },
+                            "verticalLayout": {
+                                "type": "string",
+                                "description": "Figlet control\n ['default', full', 'fitted', 'controlled smushing', and 'universal smushing']"
+                            },
+                            "trimTrailingWhitespace": {
+                                "type": "boolean",
+                                "description": "Whether to trim extra spaces at the end of each line"
+                            },
+                            "trimEmptyLines": {
+                                "type": "boolean",
+                                "description": "Whether to trim lines with only spaces (empty lines)"
+                            },
+                            "prefix": {
+                                "type": "string",
+                                "description": "A String to place before the figlet"
+                            },
+                            "suffix": {
+                                "type": "string",
+                                "description": "A String to palce after the figlet"
+                            },
+                            "perLinePrefix": {
+                                "type": "string",
+                                "description": "A string to place at the beginning of each line (before comments processed)"
+                            }
+                        },
+                        "description": "A full config to use for quick settings",
+                        "scope": "resource"
+                    }
+                },
+                "banner-comments-plus.font": {
+                    "type": "string",
+                    "default": "Banner4",
+                    "description": "Default banner font to use.",
+                    "scope": "resource"
+                },
+                "banner-comments-plus.horizontalLayout": {
+                    "type": "string",
+                    "default": "default",
+                    "scope": "resouce",
+                    "description": "Figlet horizontal layout control ['default', full', 'fitted', 'controlled smushing', and 'universal smushing']"
+                },
+                "banner-comments-plus.verticalLayout": {
+                    "type": "string",
+                    "default": "default",
+                    "description": "Figlet vertical layout control ['default', full', 'fitted', 'controlled smushing', and 'universal smushing']",
+                    "scope": "resouce"
+                },
+                "banner-comments-plus.trimTrailingWhitespaces": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Automatically trims the trailing whitespaces of the generated banner.",
+                    "scope": "resource"
+                },
+                "banner-comments-plus.trimEmptyLines": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Automatically trim empty lines from output.",
+                    "scope": "resource"
+                },
+                "banner-comments-plus.prefix": {
+                    "type": "string",
+                    "default": "",
+                    "description": "A String to place before the figlet",
+                    "scope": "resource"
+                },
+                "banner-comments-plus.suffix": {
+                    "type": "string",
+                    "default": "",
+                    "description": "A String to place after the figlet",
+                    "scope": "resource"
+                },
+                "banner-comments-plus.perLinePrefix": {
+                    "type": "string",
+                    "default": " ",
+                    "description": "A string to place at the beginning of each line (before comments processed)",
+                    "scope": "resource"
+                },
+                "banner-comments-plus.favorites": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "title": "Name of Figlet Font"
+                    },
+                    "default": [],
+                    "description": "List of favorites figlet fonts.",
+                    "scope": "resource"
+                }
+            }
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.6",
+        "@types/node": "^7.0.43",
+        "@types/mocha": "^2.2.42",
+        "figlet": "^1.2.0",
+        "async": "^2.6.0",
+        "comment-json": "^1.1.3"
+    },
+    "dependencies": {
+        "async": "^2.6.0",
+        "comment-json": "^1.1.3",
+        "figlet": "^1.2.0"
+    }
+}
