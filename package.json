@@ -20,7 +20,6 @@
         "onCommand:banner-comments-plus.ApplyFromList",
         "onCommand:banner-comments-plus.ApplyFromFavorites",
         "onCommand:banner-comments-plus.ApplyFromConfig",
-        "onCommand:banner-comments-plus.ApplyDirectFromConfig",
         "onCommand:banner-comments-plus.SetDefaultFont",
         "onCommand:banner-comments-plus.SetDefaultFontFromFavorites",
         "onCommand:banner-comments-plus.AddFontToFavorites",
@@ -48,12 +47,7 @@
             {
                 "command": "banner-comments-plus.ApplyFromConfig",
                 "when": "editorTextFocus && !editorReadonly",
-                "title": "BannerComments+: Apply From Config"
-            },
-            {
-                "command": "banner-comments-plus.ApplyDirectFromConfig",
-                "when": "editorTextFocus && !editorReadonly",
-                "title": "BannerComments+: Apply Direct From Config [use with geddski.macros]"
+                "title": "BannerComments+: Apply From Config (works with geddski.macros)"
             },
             {
                 "command": "banner-comments-plus.SetDefaultFont",

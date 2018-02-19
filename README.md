@@ -96,12 +96,12 @@ Play around with **over 275+** _mostly_ useless ascii fonts in this [sandbox](ht
 
 **User Settings**
 
-The `name` argument MUST match the `key` given to the config in your settings.
+The `args` value MUST match the `key` given to the config in your settings.
 
 ``` json
      "macros": {
         "banner-comments-plus-h1": [
-            {"command": "banner-comments-plus.ApplyDirectFromConfig", "args": {"name": "h1"}},
+            {"command": "banner-comments-plus.ApplyFromConfig", "args": "h1"},
         ]
     }
 ```

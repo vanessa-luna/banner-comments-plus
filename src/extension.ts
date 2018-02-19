@@ -55,11 +55,21 @@ function applyFavorite () {
         }
     );
 }
-/* apply after picking config from settings */
-function applyFromConfig () {
+/* apply after picking config from settings or apply using shortcut with geddski.macros*/
+function applyFromConfig (name:string) {
     const editor:vscode.TextEditor = vscode.window.activeTextEditor;
     var bcpConfig = vscode.workspace.getConfiguration(BCP_CONFIG_NS);
     let configs:object = bcpConfig.get("configs");
+    if (name) {
+        let config = configs[name];
+        if(config) {
+            config.languageId = editor.document.languageId;
+            applyToEditor(editor, formatConfigFromSettings(config));
+        } else {
+            vscode.window.showInformationMessage("BannerComments+: no config found with name '" + name + "'");
+        }
+        return;
+    }
     let descriptionKeys:string[] = bcpConfig.get("configDescriptionKeys");
     var items:vscode.QuickPickItem[] = []
     for (let key in configs) {
@@ -81,20 +91,6 @@ function applyFromConfig () {
             applyToEditor(editor, formatConfigFromSettings(config))
         }
     );
-}
-/* use geddski/macros to call configs from shortcuts */
-function applyDirectFromConfig(args:any) {
-    if (!args) return vscode.window.showErrorMessage("BannerComments+: Run Direct From Config using geddski/macros ONLY")
-    let name = args.name;
-    const editor:vscode.TextEditor = vscode.window.activeTextEditor;
-    let configs:object = vscode.workspace.getConfiguration(BCP_CONFIG_NS).get("configs");
-    let config = configs[name];
-    if(config) {
-        config.languageId = editor.document.languageId;
-        applyToEditor(editor, formatConfigFromSettings(config));
-    } else {
-        vscode.window.showErrorMessage("BannerComments+: no config found with name " + name);
-    }
 }
 /* change default font */
 function setDefaultFont() {
@@ -356,7 +352,6 @@ export function activate (context: vscode.ExtensionContext) {
         vscode.commands.registerCommand("banner-comments-plus.ApplyFromList", applyFromList),
         vscode.commands.registerCommand("banner-comments-plus.ApplyFromFavorites", applyFavorite),
         vscode.commands.registerCommand("banner-comments-plus.ApplyFromConfig", applyFromConfig),
-        vscode.commands.registerCommand("banner-comments-plus.ApplyDirectFromConfig", applyDirectFromConfig),
         vscode.commands.registerCommand("banner-comments-plus.SetDefaultFont", setDefaultFont),
         vscode.commands.registerCommand("banner-comments-plus.SetDefaultFontFromFavorites", setDefaultFontFromFavorites),
         vscode.commands.registerCommand("banner-comments-plus.AddFontToFavorites", addFontToFavorites),
