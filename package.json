@@ -167,6 +167,12 @@
                     "description": "A string to place at the beginning of each line (before comments processed)",
                     "scope": "resource"
                 },
+                "banner-comments-plus.commentStyle": {
+                    "type": "string",
+                    "default": "block",
+                    "description": "How comments are used in the output ['block', 'line', 'both']",
+                    "scope": "resource"
+                },
                 "banner-comments-plus.favorites": {
                     "type": "array",
                     "items": {

@@ -55,15 +55,7 @@ Play around with **over 275+** _mostly_ useless ascii fonts in this [sandbox](ht
 
 ## Extension Settings
 
-* `banner-comments-plus.font`: **<string\>** (name of Figlet font)
-* `banner-comments-plus.horizontalLayout`: **<string\>** ['default', full', 'fitted', 'controlled smushing', 'universal smushing']
-* `banner-comments-plus.verticalLayout`: **<string\>** ['default', full', 'fitted', 'controlled smushing', 'universal smushing']
-* `banner-comments-plus.trimTrailingWhitespace`: **<boolean\>** remove excess spaces at end of line?
-* `banner-comments-plus.trimEmptyLines`: **<boolean\>** remove lines with only spaces?
-* `banner-comments-plus.prefix`: **<string\>** string to place at beginning of result
-* `banner-comments-plus.suffix`: **<string\>** string to place at end of result
-* `banner-comments-plus.perLinePrefix`: **<string\>** string to place at beginning of each line
-* `banner-comments-plus.configs`: **<object\>** object with named configs (all other settings combine to create one config)
+- `banner-comments-plus.commentStyle`: **<string\>** How comments are used in the output ['block', 'line', 'both']
 
 
 # Macro configuration

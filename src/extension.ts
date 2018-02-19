@@ -222,27 +222,40 @@ function applyToDocumentSelection (document:vscode.TextDocument, builder:vscode.
 function generateBannerComment (inputText:string, config:any) {
     var err:Error;
     var bannerText:string = "";
-    var figletConfig = config.figletConfig
     var commentConfig = config.commentConfig
     var options = config.options
     try {
-        var figletText:string = figlet.textSync(inputText, figletConfig);
-        
-        var useBlockComment = (!!commentConfig && commentConfig.blockComment);
-
+        let useBlockComment = false;
+        let useLineComment = false;
+        let linePrefix:string = ""
+        if (commentConfig) {
+            switch (options.commentStyle) {
+                case "block": // place blockComment around whole thing ONLY but if not block, use line
+                    if      (commentConfig.blockComment) useBlockComment = true
+                    else if (commentConfig.lineComment ) useLineComment  = true
+                    break;
+                case "line" : // only use lineComment on each line but if no line, use block
+                    if      (commentConfig.lineComment ) useLineComment  = true
+                    else if (commentConfig.blockComment) useBlockComment = true
+                    break;
+                case "both" : // place both styles
+                    useBlockComment = commentConfig.blockComment || false;
+                    useLineComment  = commentConfig.lineComment  || false;
+                    break;
+            }
+        }
+        if (useLineComment) linePrefix += commentConfig.lineComment;
+        linePrefix += options.perLinePrefix;
+        // proccess now
         if (useBlockComment) bannerText += commentConfig.blockComment[0] + "\n";
-        if (options.prefix) figletText = options.prefix + "\n" + figletText
-        if (options.suffix) figletText += "\n" + options.suffix + "\n"
+        var figletText:string = "";
+        figletText += options.prefix + "\n";
+        figletText += figlet.textSync(inputText, config.figletConfig);
+        figletText += "\n" + options.suffix;
         for (let _line of figletText.split("\n")) {
             if (options.trimEmptyLines && _line.replace(/^\s*$/,"").length == 0) continue;
-            if (options.perLinePrefix) _line = options.perLinePrefix + _line;
-            if (!!commentConfig && commentConfig.lineComment) {
-                _line = commentConfig.lineComment + _line;
-            }
-            if (options.trimTrailingWhitespaces) {
-				_line = _line.replace(/\s*$/,"");
-			}
-			bannerText += _line + "\n";
+            if (options.trimTrailingWhitespaces) _line = _line.replace(/\s*$/,"");
+			bannerText += linePrefix + _line + "\n";
         }
         if (useBlockComment) bannerText += commentConfig.blockComment[1];
     } catch (replaceErr) {
@@ -277,6 +290,7 @@ function formatConfigFromSettings(config) {
             prefix:                  (config.prefix                     || bcpConfig.get("prefix")),
             suffix:                  (config.suffix                     || bcpConfig.get("suffix")) ,
             perLinePrefix:           (config.perLinePrefix              || bcpConfig.get("perLinePrefix")),
+            commentStyle:            (config.commentStyle               || bcpConfig.get("commentStyle"))
         },
         commentConfig:               getCommentConfig(config.languageId),
     }
