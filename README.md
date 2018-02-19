@@ -13,7 +13,7 @@
 
 Figlet Font Code Comments.
 
-Use quick commands or stored configs to quickly add large banner comments using [figlet](https://www.npmjs.com/package/figlet). 
+Use quick commands or stored configs to quickly add large banner comments using [figlet](https://www.npmjs.com/package/figlet).
 
 Play around with **over 275+** _mostly_ useless ascii fonts in this [sandbox](http://patorjk.com/software/taag/)
 
@@ -25,7 +25,7 @@ Play around with **over 275+** _mostly_ useless ascii fonts in this [sandbox](ht
 
 ## Commands
 
-### Apply - Converts selection or line into banner comment.
+### Apply - Converts selection or line into banner comment
 
 ![feature 'Apply'](images/apply.gif)
 
@@ -75,11 +75,11 @@ The figlet settings can be best understood by playing with [this tool](http://pa
 ### Trim Settings
 
 - `banner-comments-plus.trimTrailingWhitespace`
-    - to avoid lint traps
+  - to avoid lint traps
 - `banner-comments-plus.trimEmptyLines`
-    - often, fonts have extra lines for descenders even when none in output
-    - get rid of them to clean up your result
-    - OR don't and keep each output unfirom
+  - often, fonts have extra lines for descenders even when none in output
+  - get rid of them to clean up your result
+  - OR don't and keep each output unfirom
 
 ### Comment Style
 
@@ -108,10 +108,8 @@ These are rather straight forward. But remember these caveats:
 3. write macro for config in settings file
 4. create keybind
 
+## 2. Write config(s)
 
-### 2. Write config(s)
-
-**User Settings**
 ``` json
     "banner-comments-plus.configs": {
         "h1": {
@@ -128,9 +126,7 @@ These are rather straight forward. But remember these caveats:
     }
 ```
 
-### 3. Write macro
-
-**User Settings**
+## 3. Write macro
 
 The `args` value MUST match the `key` given to the config in your settings.
 
@@ -142,9 +138,8 @@ The `args` value MUST match the `key` given to the config in your settings.
     }
 ```
 
-### 4. Create Keybind
+## 4. Create Keybind
 
-**User Keybinds**
 ``` json
     {
         "key": "ctrl+shift+delete",
@@ -153,12 +148,9 @@ The `args` value MUST match the `key` given to the config in your settings.
     }
 ```
 
-
 # Requirements
 
 None!
-
-
 
 # Known Issues
 
