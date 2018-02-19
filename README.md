@@ -1,17 +1,15 @@
 ```
-  ____                                                       
- |  _ \                                                      
- | |_) | __ _ _ __  _ __   ___ _ __                          
- |  _ < / _` | '_ \| '_ \ / _ \ '__|                         
- | |_) | (_| | | | | | | |  __/ |                            
- |____/_\__,_|_| |_|_| |_|\___|_|            _               
-  / ____|                                   | |          _   
- | |     ___  _ __ ___  _ __ ___   ___ _ __ | |_ ___   _| |_ 
- | |    / _ \| '_ ` _ \| '_ ` _ \ / _ \ '_ \| __/ __| |_   _|
- | |___| (_) | | | | | | | | | | |  __/ | | | |_\__ \   |_|  
-  \_____\___/|_| |_| |_|_| |_| |_|\___|_| |_|\__|___/        
+           ____
+          | __ )  __ _ _ __  _ __   ___ _ __
+          |  _ \ / _` | '_ \| '_ \ / _ \ '__|
+          | |_) | (_| | | | | | | |  __/ |
+          |____/ \__,_|_| |_|_| |_|\___|_|
+    ____                                     _
+   / ___|___  _ __ ___  _ __ ___   ___ _ __ | |_ ___     _
+  | |   / _ \| '_ ` _ \| '_ ` _ \ / _ \ '_ \| __/ __|  _| |_
+  | |__| (_) | | | | | | | | | | |  __/ | | | |_\__ \ |_   _|
+   \____\___/|_| |_| |_|_| |_| |_|\___|_| |_|\__|___/   |_|
 ```
-
 
 Figlet Font Code Comments.
 
@@ -19,13 +17,11 @@ Use quick commands or stored configs to quickly add large banner comments using 
 
 Play around with **over 275+** _mostly_ useless ascii fonts in this [sandbox](http://patorjk.com/software/taag/)
 
-
-
 # Features
 
 - Will convert selection or current line into banner
 - Use a default configuration or create multiple saved configs
-- Setup keybinds for your favorite configs using [geddski/macros](https://marketplace.visualstudio.com/items?itemName=geddski.macros) ([instructions below](#macro-configuration))
+- Setup keybinds for your favorite configs using [geddski.macros](https://marketplace.visualstudio.com/items?itemName=geddski.macros) ([instructions below](#macro-configuration))
 
 ## Commands
 
@@ -37,7 +33,7 @@ Play around with **over 275+** _mostly_ useless ascii fonts in this [sandbox](ht
 
     ![feature 'ApplyFromConfig'](images/applyFromConfig.gif)
 
-- Apply configs with keybinds using geddski/macros
+- Apply configs with keybinds using geddski.macros
 
     ![feature 'Apply Config with Keybind'](images/keybinds.gif)
 
@@ -55,12 +51,21 @@ Play around with **over 275+** _mostly_ useless ascii fonts in this [sandbox](ht
 
 ## Extension Settings
 
+- `banner-comments-plus.font`: **<string\>** (name of Figlet font)
+- `banner-comments-plus.horizontalLayout`: **<string\>** ['default', full', 'fitted', 'controlled smushing', 'universal smushing']
+- `banner-comments-plus.verticalLayout`: **<string\>** ['default', full', 'fitted', 'controlled smushing', 'universal smushing']
+- `banner-comments-plus.trimTrailingWhitespace`: **<boolean\>** remove excess spaces at end of line?
+- `banner-comments-plus.trimEmptyLines`: **<boolean\>** remove lines with only spaces?
 - `banner-comments-plus.commentStyle`: **<string\>** How comments are used in the output ['block', 'line', 'both']
+- `banner-comments-plus.prefix`: **<string\>** string to place at beginning of result
+- `banner-comments-plus.suffix`: **<string\>** string to place at end of result
+- `banner-comments-plus.perLinePrefix`: **<string\>** string to place at beginning of each line
+- `banner-comments-plus.configs`: **<object\>** object with named configs (all other settings combine to create one config)
 
 
 # Macro configuration
 
-1. install geddski/macros
+1. install geddski.macros
 2. write configs in settings file
 3. write macro for config in settings file
 4. create keybind
@@ -77,6 +82,7 @@ Play around with **over 275+** _mostly_ useless ascii fonts in this [sandbox](ht
             "verticalLayout": "default",
             "trimTrailingWhitespace": false,
             "trimEmptyLines": true,
+            "commentStyle": "block",
             "perLinePrefix": " ",
             "prefix": "",
             "suffix": "--------------------------------------------------"

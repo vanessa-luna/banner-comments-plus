@@ -74,54 +74,9 @@
             "type": "object",
             "title": "Banner comments +",
             "properties": {
-                "banner-comments-plus.configs": {
-                    "type": "object",
-                    "default": {},
-                    "description": "Hash of stored configs for quick use",
-                    "items": {
-                        "type": "object",
-                        "title": "Config for BC+",
-                        "properties": {
-                            "font": {
-                                "type": "string",
-                                "description": "Name of Figlet Font"
-                            },
-                            "horizontalLayout": {
-                                "type": "string",
-                                "description": "Figlet control\n ['default', full', 'fitted', 'controlled smushing', and 'universal smushing']"
-                            },
-                            "verticalLayout": {
-                                "type": "string",
-                                "description": "Figlet control\n ['default', full', 'fitted', 'controlled smushing', and 'universal smushing']"
-                            },
-                            "trimTrailingWhitespace": {
-                                "type": "boolean",
-                                "description": "Whether to trim extra spaces at the end of each line"
-                            },
-                            "trimEmptyLines": {
-                                "type": "boolean",
-                                "description": "Whether to trim lines with only spaces (empty lines)"
-                            },
-                            "prefix": {
-                                "type": "string",
-                                "description": "A String to place before the figlet"
-                            },
-                            "suffix": {
-                                "type": "string",
-                                "description": "A String to palce after the figlet"
-                            },
-                            "perLinePrefix": {
-                                "type": "string",
-                                "description": "A string to place at the beginning of each line (before comments processed)"
-                            }
-                        },
-                        "description": "A full config to use for quick settings",
-                        "scope": "resource"
-                    }
-                },
                 "banner-comments-plus.font": {
                     "type": "string",
-                    "default": "Banner4",
+                    "default": "Standard",
                     "description": "Default banner font to use.",
                     "scope": "resource"
                 },
@@ -139,7 +94,7 @@
                 },
                 "banner-comments-plus.trimTrailingWhitespaces": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Automatically trims the trailing whitespaces of the generated banner.",
                     "scope": "resource"
                 },
@@ -182,6 +137,67 @@
                     "default": [],
                     "description": "List of favorites figlet fonts.",
                     "scope": "resource"
+                },
+                "banner-comments-plus.configDescriptionKeys": {
+                    "type":"array",
+                    "items": {
+                        "type": "string",
+                        "title": "key of value in config to display in ApplyFromConfig"
+                    },
+                    "default": [ "font" ],
+                    "description": "List of keys to display in ApplyFromConfig picker",
+                    "scope": "resource"
+                },
+                "banner-comments-plus.configs": {
+                    "type": "object",
+                    "default": {},
+                    "description": "Hash of stored configs for quick use",
+                    "items": {
+                        "type": "object",
+                        "title": "Config for BC+",
+                        "properties": {
+                            "font": {
+                                "type": "string",
+                                "description": "Name of Figlet Font"
+                            },
+                            "horizontalLayout": {
+                                "type": "string",
+                                "description": "Figlet control\n ['default', full', 'fitted', 'controlled smushing', and 'universal smushing']"
+                            },
+                            "verticalLayout": {
+                                "type": "string",
+                                "description": "Figlet control\n ['default', full', 'fitted', 'controlled smushing', and 'universal smushing']"
+                            },
+                            "trimTrailingWhitespace": {
+                                "type": "boolean",
+                                "description": "Whether to trim extra spaces at the end of each line"
+                            },
+                            "trimEmptyLines": {
+                                "type": "boolean",
+                                "description": "Whether to trim lines with only spaces (empty lines)"
+                            },
+                            "commentStyle": {
+                                "type": "string",
+                                "default": "block",
+                                "description": "How comments are used in the output ['block', 'line', 'both']",
+                                "scope": "resource"
+                            },
+                            "prefix": {
+                                "type": "string",
+                                "description": "A String to place before the figlet"
+                            },
+                            "suffix": {
+                                "type": "string",
+                                "description": "A String to palce after the figlet"
+                            },
+                            "perLinePrefix": {
+                                "type": "string",
+                                "description": "A string to place at the beginning of each line (before comments processed)"
+                            }
+                        },
+                        "description": "A full config to use for quick settings",
+                        "scope": "resource"
+                    }
                 }
             }
         }
