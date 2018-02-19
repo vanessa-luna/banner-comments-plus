@@ -10,9 +10,9 @@ import * as async from 'async';
 const BCP_CONFIG_NS:string = "banner-comments-plus"
 
 
-/* 
-    PUBLIC API
-*/
+// 
+// API
+// 
 /* apply using defaults in settings */
 function apply () {
     const editor:vscode.TextEditor = vscode.window.activeTextEditor;
@@ -188,9 +188,9 @@ function removeFromFavorites () {
 
 
 
-/*
-    LOGICS
-*/
+//
+//  LOGICS
+//
 /* given an editor and config, make a banner! */
 function applyToEditor (editor:vscode.TextEditor, config) {
     return editor.edit(
@@ -260,9 +260,9 @@ function generateBannerComment (inputText:string, config:any) {
 
 
 
-/* 
-    UTILITIES
-*/
+// 
+//  UTILITIES
+//
 function formatConfigFromSettings(config) {
     var bcpConfig = vscode.workspace.getConfiguration(BCP_CONFIG_NS);
     return {
