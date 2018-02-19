@@ -4,6 +4,8 @@ Format: [Keep a Changelog](http://keepachangelog.com/)
 
 Adheres: [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+- hopefulyl add my own font to the figlet implementation (I miss the one I used in Atom, aka ANSI without shadow)
 
 ## [0.2.0] - 2018-02-18
 
