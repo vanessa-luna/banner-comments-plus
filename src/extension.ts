@@ -264,19 +264,19 @@ function generateBannerComment (inputText:string, config:any) {
     UTILITIES
 */
 function formatConfigFromSettings(config) {
-    var pbcConfig = vscode.workspace.getConfiguration(BCP_CONFIG_NS);
+    var bcpConfig = vscode.workspace.getConfiguration(BCP_CONFIG_NS);
     return {
         figletConfig: {
-            font:                    (config.font || pbcConfig.font),
-            horizontalLayout:        (config.horizontalLayout || pbcConfig.horizontalLayout),
-            verticalLayout:          (config.verticalLayout || pbcConfig.verticalLayout)
+            font:                    (config.font                       || bcpConfig.get("font")),
+            horizontalLayout:        (config.horizontalLayout           || bcpConfig.get("horizontalLayout")),
+            verticalLayout:          (config.verticalLayout             || bcpConfig.get("verticalLayout"))
         },
         options: {
-            trimTrailingWhitespaces: (config.trimTrailingWhitespaces || pbcConfig.trimTrailingWhitespace),
-            trimEmptyLines:          (config.trimEmptyLines || pbcConfig.trimEmptyLines),
-            prefix:                  (config.prefix || pbcConfig.prefix),
-            suffix:                  (config.suffix || pbcConfig.suffix) ,
-            perLinePrefix:           (config.perLinePrefix || pbcConfig.perLinePrefix)
+            trimTrailingWhitespaces: (config.trimTrailingWhitespaces    || bcpConfig.get("trimTrailingWhitespace")),
+            trimEmptyLines:          (config.trimEmptyLines             || bcpConfig.get("trimEmptyLines")),
+            prefix:                  (config.prefix                     || bcpConfig.get("prefix")),
+            suffix:                  (config.suffix                     || bcpConfig.get("suffix")) ,
+            perLinePrefix:           (config.perLinePrefix              || bcpConfig.get("perLinePrefix")),
         },
         commentConfig:               getCommentConfig(config.languageId),
     }
@@ -286,16 +286,17 @@ function getDefaultConfig(languageId) {
     var bcpConfig = vscode.workspace.getConfiguration(BCP_CONFIG_NS);
     return {
         figletConfig: {
-            font:                    (bcpConfig.get('font')                    || "Standard"),
-            horizontalLayout:        (bcpConfig.get('horizontalLayout')        || "default" ),
-            verticalLayout:          (bcpConfig.get('verticalLayout')          || "default" )
+            font:                    bcpConfig.get('font'),
+            horizontalLayout:        bcpConfig.get('horizontalLayout'),
+            verticalLayout:          bcpConfig.get('verticalLayout')
         },
         options: {
-            trimTrailingWhitespaces: (bcpConfig.get("trimTrailingWhitespaces") || false),
-            trimEmptyLines:          (bcpConfig.get("trimEmptyLines")          || false),
-            prefix:                  (bcpConfig.get("prefix")                  || null ),
-            suffix:                  (bcpConfig.get("suffix")                  || null ),
-            perLinePrefix:           (bcpConfig.get("perLinePrefix")       || null )
+            trimTrailingWhitespaces: bcpConfig.get("trimTrailingWhitespaces"),
+            trimEmptyLines:          bcpConfig.get("trimEmptyLines"),
+            prefix:                  bcpConfig.get("prefix"),
+            suffix:                  bcpConfig.get("suffix"),
+            perLinePrefix:           bcpConfig.get("perLinePrefix"),
+            commentStyle:            bcpConfig.get("commentStyle")
         },
         commentConfig:               getCommentConfig(languageId)
     }
