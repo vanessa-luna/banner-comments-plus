@@ -2,7 +2,7 @@
     "name": "banner-comments-plus",
     "displayName": "Banner Comments +",
     "description": "Figlet Font Banner Comments (ascii fonts)",
-    "version": "0.0.1",
+    "version": "0.2.0",
     "publisher": "lunarlimbo",
     "repository": {
         "type": "git",
