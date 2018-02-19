@@ -25,21 +25,23 @@ Play around with **over 275+** _mostly_ useless ascii fonts in this [sandbox](ht
 
 ## Commands
 
-- **"Apply"**: Converts selectoin or line into banner comment
+### Apply - Converts selection or line into banner comment.
 
-    ![feature 'Apply'](images/apply.gif)
+![feature 'Apply'](images/apply.gif)
 
-- **"ApplyFromConfig"**: Convert selection or line using stored config
+### ApplyFromConfig - Convert selection or line using stored config
 
-    ![feature 'ApplyFromConfig'](images/applyFromConfig.gif)
+![feature 'ApplyFromConfig'](images/applyFromConfig.gif)
 
-- Apply configs with keybinds using geddski.macros
+## Keybinds for configs - Apply configs with keybinds using [geddski.macros](https://marketplace.visualstudio.com/items?itemName=geddski.macros)
 
-    ![feature 'Apply Config with Keybind'](images/keybinds.gif)
+![feature 'Apply Config with Keybind'](images/keybinds.gif)
 
-- Supports multiple selections:
+### Supports multiple selections
 
-    ![feature 'Multiple Selections'](images/multi-selection.gif)
+![feature 'Multiple Selections'](images/multi-selection.gif)
+
+### Other commands
 
 - **ApplyFromList** - select font before applying default config
 - **ApplyFromFavorites** - select favorite font before applying default config
@@ -62,6 +64,42 @@ Play around with **over 275+** _mostly_ useless ascii fonts in this [sandbox](ht
 - `banner-comments-plus.perLinePrefix`: **<string\>** string to place at beginning of each line
 - `banner-comments-plus.configs`: **<object\>** object with named configs (all other settings combine to create one config)
 
+### Figlet Settings
+
+The figlet settings can be best understood by playing with [this tool](http://patorjk.com/software/taag/)
+
+- `banner-comments-plus.font`
+- `banner-comments-plus.horizontalLayout`
+- `banner-comments-plus.verticalLayout`
+
+### Trim Settings
+
+- `banner-comments-plus.trimTrailingWhitespace`
+    - to avoid lint traps
+- `banner-comments-plus.trimEmptyLines`
+    - often, fonts have extra lines for descenders even when none in output
+    - get rid of them to clean up your result
+    - OR don't and keep each output unfirom
+
+### Comment Style
+
+Some languages don't have both styles of comments. Some langauges have different standards for how to use those comment styles. Take your pick.
+
+- `block`: only use block style comment, but fallback to line comment if none
+- `line`: only use line style comment, but fallback to block comment if none
+- `both`: always put both block and line comments in output
+
+### Fix Settings
+
+These are rather straight forward. But remember these caveats:
+
+1. perLinePrefix is applied to your prefix and suffix
+2. Use \n to add newlines
+3. perLinePrefix applied even without commentStyle line added
+
+- `banner-comments-plus.prefix`
+- `banner-comments-plus.suffix`
+- `banner-comments-plus.perLinePrefix`
 
 # Macro configuration
 
