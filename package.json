@@ -171,6 +171,7 @@
                     "type": "object",
                     "default": {},
                     "description": "Hash of stored configs for quick use\n all other settings can be used as properties of your config",
+                    "scope": "resource"
                 }
             }
         }
