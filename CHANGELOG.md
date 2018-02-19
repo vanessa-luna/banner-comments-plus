@@ -16,9 +16,9 @@ lunar_limbo forks, stumbles, refactors 😅
   - `prefix` - string to place before banner
   - `suffix` - string to place after banner
   - `perLinePrefix` - string to place at the beginning of each line
-  - `configs` - a hash of named configs for easy use
   - `commentStyle` - How comments are used in the output ['block', 'line', 'both', 'smart']
   - `configDescriptionKeys` - list of keys to display in ApplyFromConfig picker
+  - `configs` - a hash of named configs for easy use
 - commands
   - `ApplyFromList` - pick font from full list before applying defaults
   - `ApplyFromFavorite` - pick font from favorites before applying defaults

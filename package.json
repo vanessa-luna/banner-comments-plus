@@ -83,13 +83,27 @@
                 "banner-comments-plus.horizontalLayout": {
                     "type": "string",
                     "default": "default",
-                    "scope": "resouce",
-                    "description": "Figlet horizontal layout control ['default', full', 'fitted', 'controlled smushing', and 'universal smushing']"
+                    "enum": [
+                        "default",
+                        "full",
+                        "fitted",
+                        "controlled smushing",
+                        "universal smushing"
+                    ],
+                    "description": "Figlet horizontal layout control \n['default', 'full', 'fitted', 'controlled smushing', 'universal smushing']",
+                    "scope": "resouce"
                 },
                 "banner-comments-plus.verticalLayout": {
                     "type": "string",
                     "default": "default",
-                    "description": "Figlet vertical layout control ['default', full', 'fitted', 'controlled smushing', and 'universal smushing']",
+                    "enum": [
+                        "default",
+                        "full",
+                        "fitted",
+                        "controlled smushing",
+                        "universal smushing"
+                    ],
+                    "description": "Figlet vertical layout control \n['default', 'full', 'fitted', 'controlled smushing', 'universal smushing']",
                     "scope": "resouce"
                 },
                 "banner-comments-plus.trimTrailingWhitespaces": {
@@ -125,7 +139,12 @@
                 "banner-comments-plus.commentStyle": {
                     "type": "string",
                     "default": "block",
-                    "description": "How comments are used in the output ['block', 'line', 'both']",
+                    "enum": [
+                        "block",
+                        "line",
+                        "both"
+                    ],
+                    "description": "How comments are used in the output \n['block, 'line', 'both']",
                     "scope": "resource"
                 },
                 "banner-comments-plus.favorites": {
@@ -151,53 +170,7 @@
                 "banner-comments-plus.configs": {
                     "type": "object",
                     "default": {},
-                    "description": "Hash of stored configs for quick use",
-                    "items": {
-                        "type": "object",
-                        "title": "Config for BC+",
-                        "properties": {
-                            "font": {
-                                "type": "string",
-                                "description": "Name of Figlet Font"
-                            },
-                            "horizontalLayout": {
-                                "type": "string",
-                                "description": "Figlet control\n ['default', full', 'fitted', 'controlled smushing', and 'universal smushing']"
-                            },
-                            "verticalLayout": {
-                                "type": "string",
-                                "description": "Figlet control\n ['default', full', 'fitted', 'controlled smushing', and 'universal smushing']"
-                            },
-                            "trimTrailingWhitespace": {
-                                "type": "boolean",
-                                "description": "Whether to trim extra spaces at the end of each line"
-                            },
-                            "trimEmptyLines": {
-                                "type": "boolean",
-                                "description": "Whether to trim lines with only spaces (empty lines)"
-                            },
-                            "commentStyle": {
-                                "type": "string",
-                                "default": "block",
-                                "description": "How comments are used in the output ['block', 'line', 'both']",
-                                "scope": "resource"
-                            },
-                            "prefix": {
-                                "type": "string",
-                                "description": "A String to place before the figlet"
-                            },
-                            "suffix": {
-                                "type": "string",
-                                "description": "A String to palce after the figlet"
-                            },
-                            "perLinePrefix": {
-                                "type": "string",
-                                "description": "A string to place at the beginning of each line (before comments processed)"
-                            }
-                        },
-                        "description": "A full config to use for quick settings",
-                        "scope": "resource"
-                    }
+                    "description": "Hash of stored configs for quick use\n all other settings can be used as properties of your config",
                 }
             }
         }
