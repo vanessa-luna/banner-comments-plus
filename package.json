@@ -2,8 +2,13 @@
     "name": "banner-comments-plus",
     "displayName": "Banner Comments +",
     "description": "Figlet Font Banner Comments (ascii fonts)",
+    "icon": "images/icon.png",
     "version": "0.2.0",
     "publisher": "lunarlimbo",
+    "homepage": "https://github.com/vanessa-luna/banner_comments_plus/blob/master/README.md",
+    "bugs": {
+        "url": "https://github.com/vanessa-luna/banner_comments_plus/issues"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/lunar_limbo/banner_comments_plus.git"
@@ -11,6 +16,13 @@
     "engines": {
         "vscode": "^1.20.0"
     },
+    "keywords": [
+        "block",
+        "comment",
+        "header",
+        "banner",
+        "title"
+    ],
     "categories": [
         "Formatters",
         "Other"
