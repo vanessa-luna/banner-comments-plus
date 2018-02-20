@@ -8,7 +8,13 @@ import * as async from 'async';
 
 // String for accessing settings in getConfiguration
 const BCP_CONFIG_NS:string = "banner-comments-plus"
+var BCP_FONTS_DIR:string;
+const BCP_ADDED_FONTS:string[] = [];
 
+const oldFontsSync:Function = figlet.fontsSync;
+const oldLoadFontSync:Function = figlet.loadFontSync
+figlet.fontsSync = bcpFontsSync;
+figlet.loadFontSync = bcpLoadFontSync;
 
 // 
 // API
@@ -373,4 +379,33 @@ export function activate (context: vscode.ExtensionContext) {
         vscode.commands.registerCommand("banner-comments-plus.AddCurrentFontToFavorites", addCurrentFontToFavorites),
         vscode.commands.registerCommand("banner-comments-plus.RemoveFontFromFavorites", removeFromFavorites)
     );
+    loadCustomFonts (context)
+}
+
+function loadCustomFonts (context) {
+    BCP_FONTS_DIR = context.extensionPath + "/src/fonts/";
+    fs.readdirSync(BCP_FONTS_DIR).forEach(function(file) {
+        if ( /\.flf$/.test(file) ) {
+            BCP_ADDED_FONTS.push( file.replace(/\.flf$/,'') );
+        }
+    });
+}
+    
+function bcpFontsSync () {
+    var fontList = oldFontsSync()
+    fs.readdirSync(BCP_FONTS_DIR).forEach(function(file) {
+        if ( /\.flf$/.test(file) ) {
+            fontList.push( file.replace(/\.flf$/,'') );
+            BCP_ADDED_FONTS
+        }
+    });
+    return fontList;
+}
+function bcpLoadFontSync (name) {
+    if (BCP_ADDED_FONTS.includes(name)) {
+        var fontData = fs.readFileSync(BCP_FONTS_DIR + name + '.flf',  {encoding: 'utf-8'});
+        fontData = fontData + '';
+        return figlet.parseFont(name, fontData);
+    }
+    return oldLoadFontSync(name);
 }

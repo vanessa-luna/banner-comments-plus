@@ -5,7 +5,7 @@ Format: [Keep a Changelog](http://keepachangelog.com/)
 Adheres: [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- hopefulyl add my own font to the figlet implementation (I miss the one I used in Atom, aka ANSI without shadow)
+  - `AddFont` - add your own .flf font to the figlet
 
 ## [0.2.0] - 2018-02-18
 
@@ -25,6 +25,8 @@ lunar_limbo forks, stumbles, refactors 😅
   - `ApplyFromList` - pick font from full list before applying defaults
   - `ApplyFromFavorite` - pick font from favorites before applying defaults
   - `ApplyFromConfig` - pick stored config to apply with (works with geddski.macros)
+- features
+  - implemented abiltiy to add more fonts I have picked
 
 ### Changed
 
