@@ -5,12 +5,18 @@ Format: [Keep a Changelog](http://keepachangelog.com/)
 Adheres: [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+  
   - `AddFont` - add your own .flf font to the figlet
   - `ApplyWithNewConfig` - generate a new config with menus, save it, and apply it to current selection(s)
-  - Fix added-font reference issue, sorry
   - Work with custom "languages" and their comment styles
   - Update README to better explain the benefits
 
+## [0.2.3] - 2018-02-22
+
+still learning the tools for publish and versioning, sorry
+
+### Fixed
+- Fix added-font reference issue, sorry
 
 ## [0.2.1] - 2018-02-22
 
