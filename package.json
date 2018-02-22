@@ -1,9 +1,9 @@
 {
     "name": "banner-comments-plus",
     "displayName": "Banner Comments +",
-    "description": "Figlet Font Banner Comments (ascii fonts)",
+    "description": "Organize your code with large ASCII font comments",
     "icon": "images/icon.png",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "publisher": "lunarlimbo",
     "homepage": "https://github.com/vanessa-luna/banner-comments-plus/blob/master/README.md",
     "bugs": {
