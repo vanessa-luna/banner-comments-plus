@@ -386,7 +386,7 @@ export function activate (context: vscode.ExtensionContext) {
 }
 
 function loadCustomFonts (context) {
-    BCP_FONTS_DIR = context.extensionPath + "/src/fonts/";
+    BCP_FONTS_DIR = context.extensionPath + "/fonts/";
     fs.readdirSync(BCP_FONTS_DIR).forEach(function(file) {
         if ( /\.flf$/.test(file) ) {
             BCP_ADDED_FONTS.push( file.replace(/\.flf$/,'') );
