@@ -118,7 +118,7 @@
                     "description": "Figlet vertical layout control \n['default', 'full', 'fitted', 'controlled smushing', 'universal smushing']",
                     "scope": "resouce"
                 },
-                "banner-comments-plus.trimTrailingWhitespaces": {
+                "banner-comments-plus.trimTrailingWhitespace": {
                     "type": "boolean",
                     "default": false,
                     "description": "Automatically trims the trailing whitespaces of the generated banner.",

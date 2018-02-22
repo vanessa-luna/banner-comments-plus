@@ -260,7 +260,7 @@ function generateBannerComment (inputText:string, config:any) {
         figletText += "\n" + options.suffix;
         for (let _line of figletText.split("\n")) {
             if (options.trimEmptyLines && _line.replace(/^\s*$/,"").length == 0) continue;
-            if (options.trimTrailingWhitespaces) _line = _line.replace(/\s*$/,"");
+            if (options.trimTrailingWhitespace) _line = _line.replace(/\s*$/,"");
 			bannerText += linePrefix + _line + "\n";
         }
         if (useBlockComment) bannerText += commentConfig.blockComment[1];
@@ -291,7 +291,7 @@ function formatConfigFromSettings(config) {
             verticalLayout:          (config.verticalLayout             || bcpConfig.get("verticalLayout"))
         },
         options: {
-            trimTrailingWhitespaces: (config.trimTrailingWhitespaces    || bcpConfig.get("trimTrailingWhitespace")),
+            trimTrailingWhitespace: (config.trimTrailingWhitespace    || bcpConfig.get("trimTrailingWhitespace")),
             trimEmptyLines:          (config.trimEmptyLines             || bcpConfig.get("trimEmptyLines")),
             prefix:                  (config.prefix                     || bcpConfig.get("prefix")),
             suffix:                  (config.suffix                     || bcpConfig.get("suffix")) ,
@@ -311,7 +311,7 @@ function getDefaultConfig(languageId) {
             verticalLayout:          bcpConfig.get('verticalLayout')
         },
         options: {
-            trimTrailingWhitespaces: bcpConfig.get("trimTrailingWhitespaces"),
+            trimTrailingWhitespace: bcpConfig.get("trimTrailingWhitespace"),
             trimEmptyLines:          bcpConfig.get("trimEmptyLines"),
             prefix:                  bcpConfig.get("prefix"),
             suffix:                  bcpConfig.get("suffix"),
@@ -337,6 +337,9 @@ function getLanguageConfig(languageId:string):any {
 		let langConfigFilepath:string;
 		for (const _ext of vscode.extensions.all) {
 			if (
+                // FIXME: noticed by luna @ 2/22/2018, 11:47:27 AM
+                // remove startswith, and better capture language styles...
+                // start with python.. there is more than one language implementation
 				_ext.id.startsWith("vscode.") &&
 				_ext.packageJSON.contributes &&
 				_ext.packageJSON.contributes.languages

@@ -155,5 +155,6 @@ None!
 # Known Issues
 
 - Only the languages provided by vscode are supported to wrap the banner with comments.
+- Does not work with Markdown because of naming convention of extension from Microsoft
 
 -----------------------------------------------------------------------------------------------------------
