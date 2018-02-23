@@ -5,11 +5,28 @@ Format: [Keep a Changelog](http://keepachangelog.com/)
 Adheres: [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-  
-  - `AddFont` - add your own .flf font to the figlet
-  - `ApplyWithNewConfig` - generate a new config with menus, save it, and apply it to current selection(s)
-  - Work with custom "languages" and their comment styles
-  - Update README to better explain the benefits
+
+- Work with custom "languages" and their comment styles
+- if selection is multi line, only remove empty bottom lines...
+
+
+## [0.3.0] - 2018-02-24
+
+New Commands, New Font, and README updates 😁
+
+### Added
+
+- commands
+  - `AddCustomFont` - add your own .flf font to figlet
+  - `RemoveCustomFont` - remove font from custom list
+  - `AddNewConfig` - create new config using menus - it's alright
+- configurations
+  - `customFonts` - array of file paths to custom .flf fonts
+- fonts
+  - "ANSI Slim" added
+
+
+
 
 ## [0.2.3] - 2018-02-22
 
@@ -18,10 +35,14 @@ still learning the tools for publish and versioning, sorry
 ### Fixed
 - Fix added-font reference issue, sorry
 
+
+
 ## [0.2.1] - 2018-02-22
 
 ### Fixed
-  - trimTrailingWhitespace now fixed. Dumb human error
+- trimTrailingWhitespace now fixed. Dumb human error
+
+
 
 ## [0.2.0] - 2018-02-18
 
@@ -55,6 +76,8 @@ lunar_limbo forks, stumbles, refactors 😅
   - extension.bannerCommentAddAFontToFavorites -> banner-comment-plus.AddFontToFavorites
   - extension.bannerCommentAddCurrentFontToFavorites -> banner-comment-plus.AddCurrentFontToFavorites
   - extension.bannerCommentRemoveFromFavorites -> banner-comment-plus.RemoveFontFromFavorites
+
+
 
 ## [0.1.0] - 2017-10-22
 

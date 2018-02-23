@@ -3,7 +3,7 @@
     "displayName": "Banner Comments +",
     "description": "Organize your code with large ASCII font comments",
     "icon": "images/icon.png",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "publisher": "lunarlimbo",
     "homepage": "https://github.com/vanessa-luna/banner-comments-plus/blob/master/README.md",
     "bugs": {
@@ -36,7 +36,10 @@
         "onCommand:banner-comments-plus.SetDefaultFontFromFavorites",
         "onCommand:banner-comments-plus.AddFontToFavorites",
         "onCommand:banner-comments-plus.AddCurrentFontToFavorites",
-        "onCommand:banner-comments-plus.RemoveFontFromFavorites"
+        "onCommand:banner-comments-plus.RemoveFontFromFavorites",
+        "onCommand:banner-comments-plus.AddCustomFont",
+        "onCommand:banner-comments-plus.RemoveCustomFont",
+        "onCommand:banner-comments-plus.AddNewConfig"
     ],
     "main": "./out/extension",
     "contributes": {
@@ -80,6 +83,18 @@
             {
                 "command": "banner-comments-plus.RemoveFontFromFavorites",
                 "title": "BannerComments+: Remove Font From Favorites"
+            },
+            {
+                "command": "banner-comments-plus.AddCustomFont",
+                "title": "BannerComments+: Add custom font"
+            },
+            {
+                "command": "banner-comments-plus.RemoveCustomFont",
+                "title": "BannerComments+: Remove custom font"
+            },
+            {
+                "command": "banner-comments-plus.AddNewConfig",
+                "title": "BannerComments+: Add New Config"
             }
         ],
         "configuration": {
@@ -169,13 +184,25 @@
                     "description": "List of favorites figlet fonts.",
                     "scope": "resource"
                 },
+                "banner-comments-plus.customFonts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "title": "path to .flf font"
+                    },
+                    "default": [],
+                    "description": "List of custom figlet fonts.",
+                    "scope": "resource"
+                },
                 "banner-comments-plus.configDescriptionKeys": {
-                    "type":"array",
+                    "type": "array",
                     "items": {
                         "type": "string",
                         "title": "key of value in config to display in ApplyFromConfig"
                     },
-                    "default": [ "font" ],
+                    "default": [
+                        "font"
+                    ],
                     "description": "List of keys to display in ApplyFromConfig picker",
                     "scope": "resource"
                 },

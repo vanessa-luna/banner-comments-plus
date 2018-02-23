@@ -10,15 +10,48 @@ import * as async from 'async';
 const BCP_CONFIG_NS:string = "banner-comments-plus"
 var BCP_FONTS_DIR:string;
 const BCP_ADDED_FONTS:string[] = [];
+const USER_ADDED_FONTS:string[] = [];
 
 const oldFontsSync:Function = figlet.fontsSync;
 const oldLoadFontSync:Function = figlet.loadFontSync
 figlet.fontsSync = bcpFontsSync;
 figlet.loadFontSync = bcpLoadFontSync;
 
-// 
-// API
-// 
+
+/*
+// ███████ ██   ██ ████████ ███    ██ ███████
+// ██       ██ ██     ██    ████   ██ ██
+// █████     ███      ██    ██ ██  ██ ███████
+// ██       ██ ██     ██    ██  ██ ██      ██
+// ███████ ██   ██    ██    ██   ████ ███████
+*/
+export function deactivate() { }
+export function activate (context: vscode.ExtensionContext) {
+    context.subscriptions.push(
+        vscode.commands.registerCommand("banner-comments-plus.Apply", apply),
+        vscode.commands.registerCommand("banner-comments-plus.ApplyFromList", applyFromList),
+        vscode.commands.registerCommand("banner-comments-plus.ApplyFromFavorites", applyFavorite),
+        vscode.commands.registerCommand("banner-comments-plus.ApplyFromConfig", applyFromConfig),
+        vscode.commands.registerCommand("banner-comments-plus.SetDefaultFont", setDefaultFont),
+        vscode.commands.registerCommand("banner-comments-plus.SetDefaultFontFromFavorites", setDefaultFontFromFavorites),
+        vscode.commands.registerCommand("banner-comments-plus.AddFontToFavorites", addFontToFavorites),
+        vscode.commands.registerCommand("banner-comments-plus.AddCurrentFontToFavorites", addCurrentFontToFavorites),
+        vscode.commands.registerCommand("banner-comments-plus.RemoveFontFromFavorites", removeFromFavorites),
+        vscode.commands.registerCommand("banner-comments-plus.AddCustomFont", addCustomFont),
+        vscode.commands.registerCommand("banner-comments-plus.RemoveCustomFont", removeCustomFont),
+        vscode.commands.registerCommand("banner-comments-plus.AddNewConfig", addNewConfig)
+    );
+    BCP_FONTS_DIR = context.extensionPath + "/fonts/";
+    loadCustomFonts ()
+}
+
+/*
+//  █████  ██████  ██
+// ██   ██ ██   ██ ██
+// ███████ ██████  ██
+// ██   ██ ██      ██
+// ██   ██ ██      ██
+*/
 /* apply using defaults in settings */
 function apply () {
     const editor:vscode.TextEditor = vscode.window.activeTextEditor;
@@ -27,13 +60,7 @@ function apply () {
 }
 /* apply default config after picking font from full list */
 function applyFromList () {
-    var availableFigletfonts:string[] = figlet.fontsSync();
-    var items:vscode.QuickPickItem[] = availableFigletfonts.map(
-        (figletFont:string) => {
-            return { label: figletFont, description: "Use the " + figletFont + " font" };
-        }
-    );
-    vscode.window.showQuickPick(items).then(
+    vscode.window.showQuickPick(quickPickFontList()).then(
         (_selectedPickerItem:vscode.QuickPickItem) => {
             if (!_selectedPickerItem) return;
             const editor:vscode.TextEditor = vscode.window.activeTextEditor;
@@ -45,13 +72,7 @@ function applyFromList () {
 }
 /* apply after picking font from favorites */
 function applyFavorite () {
-    let favoriteFonts:string[] = vscode.workspace.getConfiguration(BCP_CONFIG_NS).get("favorites");
-    var items:vscode.QuickPickItem[] = favoriteFonts.map(
-        (_favoriteFont:string) => {
-            return { label: _favoriteFont, description: "Use the " + _favoriteFont + " font" };
-        }
-    );
-    vscode.window.showQuickPick(items).then(
+    vscode.window.showQuickPick(quickPickFavoritesList()).then(
         (_selectedPickerItem:vscode.QuickPickItem) => {
             if (!_selectedPickerItem) return;
             const editor:vscode.TextEditor = vscode.window.activeTextEditor;
@@ -100,13 +121,7 @@ function applyFromConfig (name:string) {
 }
 /* change default font */
 function setDefaultFont() {
-    var availableFigletfonts:string[] = figlet.fontsSync();
-    var items:vscode.QuickPickItem[] = availableFigletfonts.map(
-        (figletFont:string) => {
-            return { label: figletFont, description: "Use the " + figletFont + " font" };
-        }
-    );
-    vscode.window.showQuickPick(items).then(
+    vscode.window.showQuickPick(quickPickFontList()).then(
         (_selectedPickerItem:vscode.QuickPickItem) => {
             if (!_selectedPickerItem) return;
             let bcpConfig:any = vscode.workspace.getConfiguration(BCP_CONFIG_NS);
@@ -116,30 +131,17 @@ function setDefaultFont() {
 }
 /* change default font picking from favorites list */
 function setDefaultFontFromFavorites () {
-    let bcpConfig:any = vscode.workspace.getConfiguration(BCP_CONFIG_NS);
-    let favoriteFonts:string[] = bcpConfig.get("favorites");
-    var items:vscode.QuickPickItem[] = favoriteFonts.map(
-        (_favoriteFont:string) => {
-            return { label: _favoriteFont, description: "Use the " + _favoriteFont + " font" };
-        }
-    );
-    vscode.window.showQuickPick(items).then(
+    vscode.window.showQuickPick(quickPickFavoritesList()).then(
         (_selectedPickerItem:vscode.QuickPickItem) => {
             if (!_selectedPickerItem) return;
             let fontToSetName:string = _selectedPickerItem.label;
-            bcpConfig.update('font', fontToSetName, true);
+            vscode.workspace.getConfiguration(BCP_CONFIG_NS).update('font', fontToSetName, true);
         }
     );
 }
 /* add a font to favorites list */
 function addFontToFavorites () {
-    var availableFigletfonts:string[] = figlet.fontsSync();
-    var items:vscode.QuickPickItem[] = availableFigletfonts.map(
-        (figletFont:string) => {
-            return { label: figletFont, description: "Use the " + figletFont + " font" };
-        }
-    );
-    vscode.window.showQuickPick(items).then(
+    vscode.window.showQuickPick(quickPickFontList()).then(
         (_selectedPickerItem:vscode.QuickPickItem) => {
             if (!_selectedPickerItem) return;
             let bcpConfig:any = vscode.workspace.getConfiguration(BCP_CONFIG_NS);
@@ -170,16 +172,11 @@ function addCurrentFontToFavorites () {
 function removeFromFavorites () {
     let bcpConfig:any = vscode.workspace.getConfiguration(BCP_CONFIG_NS);
     let favoriteFonts:string[] = bcpConfig.get("favorites");
-    if (!favoriteFonts || !favoriteFonts.length) {
+    if (!favoriteFonts.length) {
         vscode.window.showInformationMessage("BannerComments+: No fonts in favorites list");
         return;
     }
-    let items:vscode.QuickPickItem[] = favoriteFonts.map(
-        (_favoriteFont:string) => {
-            return { label: _favoriteFont, description: "Remove " + _favoriteFont + " from favorites." };
-        }
-    );
-    vscode.window.showQuickPick(items).then(
+    vscode.window.showQuickPick(quickPickFavoritesList()).then(
         (_selectedPickerItem:vscode.QuickPickItem) => {
             if (!_selectedPickerItem) return;
             let fontToRemoveName:string = _selectedPickerItem.label;
@@ -189,14 +186,69 @@ function removeFromFavorites () {
         }
     );
 }
+/* add font to custom list */
+function addCustomFont() {
+    let opts = {placeHolder: "file path to .flf font"}
+    vscode.window.showInputBox(opts).then(
+        (_path) => {
+            if (!_path || !_path.length) return;
+            // check if path actually leads to .flf
+            if (!_path.indexOf(".flf")) {
+                vscode.window.showErrorMessage("BannerComments+: Provided file path does not contain '.flf'");
+                return;
+            }
+            if (_path[0] === '~') {
+                _path = path.join(process.env.HOME, _path.slice(1));
+            }
+            if (!fs.existsSync(_path)) {
+                vscode.window.showErrorMessage("BannerComments+: Given file does not exist" + _path);
+                return;
+            } else {
+                // add font to config
+                let bcpConfig = vscode.workspace.getConfiguration(BCP_CONFIG_NS);
+                let customFonts:string[] = bcpConfig.get("customFonts");
+                if (customFonts.includes(_path)) {
+                    vscode.window.showInformationMessage("BannerComments+: Custom font already exists");
+                    return;
+                }
+                customFonts.push(_path);
+                bcpConfig.update("customFonts", customFonts, true)
+                // load font into figlet
+                loadCustomFonts();
+            }
+        }
+    )
+}
+/* remove font from custom list */
+function removeCustomFont() {
+    let bcpConfig:any = vscode.workspace.getConfiguration(BCP_CONFIG_NS);
+    let customFonts:string[] = bcpConfig.get("customFonts");
+    if (!customFonts.length) {
+        vscode.window.showInformationMessage("BannerComments+: No custom fonts saved");
+        return;
+    }
+    vscode.window.showQuickPick(quickPickCustomList()).then(
+        (_selectedPickerItem:vscode.QuickPickItem) => {
+            if (!_selectedPickerItem) return;
+            let fontToRemoveName:string = _selectedPickerItem.label;
+            let fontToRemoveIndex:number = customFonts.indexOf(fontToRemoveName);
+            customFonts.splice(fontToRemoveIndex, 1);
+            bcpConfig.update('customFonts', customFonts, true);
+        }
+    );
+}
+function addNewConfig() {
+    generateNewConfig()
+}
 
 
-
-
-
-//
-//  LOGICS
-//
+/*
+// ██       ██████   ██████  ██  ██████
+// ██      ██    ██ ██       ██ ██
+// ██      ██    ██ ██   ███ ██ ██
+// ██      ██    ██ ██    ██ ██ ██
+// ███████  ██████   ██████  ██  ██████
+*/
 /* given an editor and config, make a banner! */
 function applyToEditor (editor:vscode.TextEditor, config) {
     return editor.edit(
@@ -279,9 +331,13 @@ function generateBannerComment (inputText:string, config:any) {
 
 
 
-// 
-//  UTILITIES
-//
+/*
+// ██    ██ ████████ ██ ██      ███████
+// ██    ██    ██    ██ ██      ██
+// ██    ██    ██    ██ ██      ███████
+// ██    ██    ██    ██ ██           ██
+//  ██████     ██    ██ ███████ ███████
+*/
 function formatConfigFromSettings(config) {
     var bcpConfig = vscode.workspace.getConfiguration(BCP_CONFIG_NS);
     return {
@@ -306,17 +362,17 @@ function getDefaultConfig(languageId) {
     var bcpConfig = vscode.workspace.getConfiguration(BCP_CONFIG_NS);
     return {
         figletConfig: {
-            font:                    bcpConfig.get('font'),
-            horizontalLayout:        bcpConfig.get('horizontalLayout'),
-            verticalLayout:          bcpConfig.get('verticalLayout')
+            font:                   bcpConfig.get('font'),
+            horizontalLayout:       bcpConfig.get('horizontalLayout'),
+            verticalLayout:         bcpConfig.get('verticalLayout')
         },
         options: {
             trimTrailingWhitespace: bcpConfig.get("trimTrailingWhitespace"),
-            trimEmptyLines:          bcpConfig.get("trimEmptyLines"),
-            prefix:                  bcpConfig.get("prefix"),
-            suffix:                  bcpConfig.get("suffix"),
-            perLinePrefix:           bcpConfig.get("perLinePrefix"),
-            commentStyle:            bcpConfig.get("commentStyle")
+            trimEmptyLines:         bcpConfig.get("trimEmptyLines"),
+            prefix:                 bcpConfig.get("prefix"),
+            suffix:                 bcpConfig.get("suffix"),
+            perLinePrefix:          bcpConfig.get("perLinePrefix"),
+            commentStyle:           bcpConfig.get("commentStyle")
         },
         commentConfig:               getCommentConfig(languageId)
     }
@@ -369,46 +425,206 @@ function getLanguageConfig(languageId:string):any {
 	}
 }
 
-export function deactivate() { }
-export function activate (context: vscode.ExtensionContext) {
-    context.subscriptions.push(
-        vscode.commands.registerCommand("banner-comments-plus.Apply", apply),
-        vscode.commands.registerCommand("banner-comments-plus.ApplyFromList", applyFromList),
-        vscode.commands.registerCommand("banner-comments-plus.ApplyFromFavorites", applyFavorite),
-        vscode.commands.registerCommand("banner-comments-plus.ApplyFromConfig", applyFromConfig),
-        vscode.commands.registerCommand("banner-comments-plus.SetDefaultFont", setDefaultFont),
-        vscode.commands.registerCommand("banner-comments-plus.SetDefaultFontFromFavorites", setDefaultFontFromFavorites),
-        vscode.commands.registerCommand("banner-comments-plus.AddFontToFavorites", addFontToFavorites),
-        vscode.commands.registerCommand("banner-comments-plus.AddCurrentFontToFavorites", addCurrentFontToFavorites),
-        vscode.commands.registerCommand("banner-comments-plus.RemoveFontFromFavorites", removeFromFavorites)
-    );
-    loadCustomFonts (context)
-}
 
-function loadCustomFonts (context) {
-    BCP_FONTS_DIR = context.extensionPath + "/fonts/";
+
+
+
+
+/*
+// ███████ ██  ██████  ██      ███████ ████████     ██████  ██    ██ ██████  ███████
+// ██      ██ ██       ██      ██         ██        ██   ██ ██    ██ ██   ██ ██
+// █████   ██ ██   ███ ██      █████      ██        ██   ██ ██    ██ ██████  ███████
+// ██      ██ ██    ██ ██      ██         ██        ██   ██ ██    ██ ██   ██      ██
+// ██      ██  ██████  ███████ ███████    ██        ██████   ██████  ██████  ███████
+*/
+function loadCustomFonts () {
+    // add fonts from user
+    let customFonts:string[] = vscode.workspace.getConfiguration(BCP_CONFIG_NS).get("customFonts");
+    customFonts.forEach(_font => {
+        let fontName:string = _font.replace(/\.flf$/,'')
+        if (!USER_ADDED_FONTS.includes(fontName)) {
+            USER_ADDED_FONTS.push(fontName);
+        }
+    });
+    // add fonts from BCP
     fs.readdirSync(BCP_FONTS_DIR).forEach(function(file) {
         if ( /\.flf$/.test(file) ) {
-            BCP_ADDED_FONTS.push( file.replace(/\.flf$/,'') );
+            let fontName:string = file.replace(/\.flf$/,'')
+            if (!BCP_ADDED_FONTS.includes(fontName)) {
+                BCP_ADDED_FONTS.push(fontName);
+            }
         }
     });
 }
     
 function bcpFontsSync () {
-    var fontList = oldFontsSync()
-    fs.readdirSync(BCP_FONTS_DIR).forEach(function(file) {
-        if ( /\.flf$/.test(file) ) {
-            fontList.push( file.replace(/\.flf$/,'') );
-            BCP_ADDED_FONTS
-        }
-    });
-    return fontList;
+    return oldFontsSync().concat(BCP_ADDED_FONTS, USER_ADDED_FONTS);
 }
+
 function bcpLoadFontSync (name) {
-    if (BCP_ADDED_FONTS.includes(name)) {
-        var fontData = fs.readFileSync(BCP_FONTS_DIR + name + '.flf',  {encoding: 'utf-8'});
+    var fontName;
+    if (BCP_ADDED_FONTS.includes(name)) fontName = BCP_FONTS_DIR + name + ".flf";
+    if (USER_ADDED_FONTS.includes(name)) fontName = name + ".flf"
+    if (fontName) {
+        var fontData = fs.readFileSync(fontName,  {encoding: 'utf-8'});
         fontData = fontData + '';
         return figlet.parseFont(name, fontData);
-    }
-    return oldLoadFontSync(name);
+    } else return oldLoadFontSync(name);
+}
+
+
+
+/*
+//  ██████  ██    ██ ██  ██████ ██   ██ ██████  ██  ██████ ██   ██
+// ██    ██ ██    ██ ██ ██      ██  ██  ██   ██ ██ ██      ██  ██
+// ██    ██ ██    ██ ██ ██      █████   ██████  ██ ██      █████
+// ██ ▄▄ ██ ██    ██ ██ ██      ██  ██  ██      ██ ██      ██  ██
+//  ██████   ██████  ██  ██████ ██   ██ ██      ██  ██████ ██   ██
+//     ▀▀
+*/
+function quickPickFontList () {
+    var availableFigletfonts:string[] = figlet.fontsSync();
+    var items:vscode.QuickPickItem[] = availableFigletfonts.map(
+        (figletFont:string) => {
+            return { label: figletFont, description: "Use the " + figletFont + " font" };
+        }
+    );
+    return items || [];
+}
+function quickPickFavoritesList() {
+    let favoriteFonts:string[] = vscode.workspace.getConfiguration(BCP_CONFIG_NS).get("favorites");
+    var items:vscode.QuickPickItem[] = favoriteFonts.map(
+        (_favoriteFont:string) => {
+            return { label: _favoriteFont, description: "Use the " + _favoriteFont + " font" };
+        }
+    );
+    return items || [];
+}
+function quickPickLayoutChoices() {
+    return [
+        {label: 'default',             description: ""},
+        {label: 'full',                description: ""},
+        {label: 'fitted',              description: ""},
+        {label: 'controlled smushing', description: ""},
+        {label: 'universal smushing',  description: ""}
+    ];
+}
+function quickPickCommentStyleChoices() {
+    return [
+        {label:"Block", description:"prefer block style comments"},
+        {label:"Line", description:"prefer line style comments"},
+        {label:"Both", description:"always render both style comments"}
+    ]
+}
+function quickPickBooleanChoices() {
+    return [
+        {label:"True", description:""},
+        {label:"False", description:""}
+    ]
+}
+function quickPickCustomList() {
+    let customFonts:string[] = vscode.workspace.getConfiguration(BCP_CONFIG_NS).get("customFonts");
+    var items:vscode.QuickPickItem[] = customFonts.map(
+        (_customFont:string) => {
+            return { label: _customFont, description: "" };
+        }
+    );
+    return items || [];
+}
+function addDefaultPick(otherList) {
+    var def = [ {label:"Default Value", description:""} ]
+    if (otherList) return def.concat(otherList);
+    else return def 
+}
+
+function generateNewConfig() {
+    let bcpConfig = vscode.workspace.getConfiguration(BCP_CONFIG_NS);
+    let defaultConfig = getDefaultConfig(null);
+    let configs:object[] = bcpConfig.get("configs")
+    let config:any = {}
+    let name = "";
+    let saveDefaults:boolean = false;
+    vscode.window.showQuickPick(quickPickBooleanChoices(), {placeHolder: "Store default values in config?"}).then(_input => {
+        saveDefaults =  _input.label == "True" ? true : false;
+        // name
+        vscode.window.showInputBox({prompt: "Name for Config"}).then(_input => {
+            if (!_input.length) {
+                vscode.window.showErrorMessage("You must provide a name");
+                return;
+            }
+            for (let key in configs) {
+                if (key == _input) {
+                    vscode.window.showErrorMessage("Config with name '" + _input + "' already exists");
+                    return;
+                }
+            }
+            name = _input;
+            // font
+            vscode.window.showQuickPick(addDefaultPick(quickPickFontList()), {placeHolder: "font"}).then(_input => {
+                if (_input.label == "Default Value") {
+                    if (saveDefaults) config.font = defaultConfig.figletConfig.font;
+                } else config.font = _input.label;
+                // horizontalLayout    
+                vscode.window.showQuickPick(addDefaultPick(quickPickLayoutChoices()), {placeHolder: "horizontalLayout"}).then(_input => {
+                    if (_input.label == "Default Value") {
+                        if (saveDefaults) config.horizontalLayout = defaultConfig.figletConfig.horizontalLayout;
+                    } else config.horizontalLayout = _input.label;
+                    // verticalLayout
+                    vscode.window.showQuickPick(addDefaultPick(quickPickLayoutChoices()), {placeHolder: "verticalLayout"}).then(_input => {
+                        if (_input.label == "Default Value") {
+                            if (saveDefaults) config.verticalLayout = defaultConfig.figletConfig.verticalLayout;
+                        } else config.verticalLayout = _input.label;
+                        // trimTrailingWhitespace
+                        vscode.window.showQuickPick(addDefaultPick(quickPickBooleanChoices()), {placeHolder: "trimTrailingWhitespace"}).then(_input => {
+                            if (_input.label == "Default Value") {
+                                if (saveDefaults) config.trimTrailingWhitespace = defaultConfig.options.trimTrailingWhitespace;
+                            } else config.trimTrailingWhitespace = _input.label == "True" ? true : false;
+                            // trimEmptyLines
+                            vscode.window.showQuickPick(addDefaultPick(quickPickBooleanChoices()), {placeHolder: "trimEmptyLines"}).then(_input => {
+                                if (_input.label == "Default Value") { 
+                                    if (saveDefaults) config.trimEmptyLines = defaultConfig.options.trimEmptyLines;
+                                } else config.trimEmptyLines = _input.label == "True" ? true : false;
+                                // prefix
+                                vscode.window.showInputBox({prompt: "Prefix - '' for empty, Esc for Default Value"}).then(_input => {
+                                    if (!_input) { 
+                                        if (saveDefaults) config.prefix = defaultConfig.options.prefix;
+                                    } else {
+                                        if (_input == "''") config.prefix = "";
+                                        else config.prefix = _input;
+                                    }
+                                    // suffix
+                                    vscode.window.showInputBox({prompt: "Suffix - '' for empty, Esc for Default Value"}).then(_input => {
+                                        if (!_input) {
+                                            if (saveDefaults) config.suffix = defaultConfig.options.suffix;
+                                        } else {
+                                            if (_input == "''") config.suffix = "";
+                                            else config.suffix = _input;
+                                        }
+                                        // perLinePrefix
+                                        vscode.window.showInputBox({prompt: "perLinePrefix - '' for empty, Esc for Default Value"}).then(_input => {
+                                            if (!_input) {
+                                                if (saveDefaults) config.perLinePrefix = defaultConfig.options.perLinePrefix;
+                                            } else {
+                                                if (_input == "''") config.perLinePrefix = "";
+                                                else config.perLinePrefix = _input;
+                                            }
+                                            // commentStyle
+                                            vscode.window.showQuickPick(addDefaultPick(quickPickCommentStyleChoices()), {placeHolder: "commentStyle"}).then(_input => {
+                                                if (_input.label == "Default Value") {
+                                                    if (saveDefaults) config.commentStyle = defaultConfig.options.commentStyle;
+                                                } else config.commentStyle = _input.label;
+                                                // finish and save
+                                                configs[name] = config;
+                                                vscode.workspace.getConfiguration(BCP_CONFIG_NS).update("configs", configs, true);
+                                            }); // commentStyle
+                                        }); // perLinePrefix
+                                    }); // suffix
+                                }); // prefix
+                            }); // trimEmptyLines
+                        }); // trimTrailingWhitespace
+                    }); // verticalLayout
+                }); // horizontalLayout
+            }); // font
+        }); // name
+    }) // saveDefaults
 }
