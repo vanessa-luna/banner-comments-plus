@@ -1,43 +1,77 @@
 ```
-           ____
-          | __ )  __ _ _ __  _ __   ___ _ __
-          |  _ \ / _` | '_ \| '_ \ / _ \ '__|
-          | |_) | (_| | | | | | | |  __/ |
-          |____/ \__,_|_| |_|_| |_|\___|_|
-    ____                                     _
-   / ___|___  _ __ ___  _ __ ___   ___ _ __ | |_ ___     _
-  | |   / _ \| '_ ` _ \| '_ ` _ \ / _ \ '_ \| __/ __|  _| |_
-  | |__| (_) | | | | | | | | | | |  __/ | | | |_\__ \ |_   _|
-   \____\___/|_| |_| |_|_| |_| |_|\___|_| |_|\__|___/   |_|
+/*
+         ____
+        | __ )  __ _ _ __  _ __   ___ _ __
+        |  _ \ / _` | '_ \| '_ \ / _ \ '__|
+        | |_) | (_| | | | | | | |  __/ |
+        |____/ \__,_|_| |_|_| |_|\___|_|
+  ____                                     _
+ / ___|___  _ __ ___  _ __ ___   ___ _ __ | |_ ___     _
+| |   / _ \| '_ ` _ \| '_ ` _ \ / _ \ '_ \| __/ __|  _| |_
+| |__| (_) | | | | | | | | | | |  __/ | | | |_\__ \ |_   _|
+ \____\___/|_| |_| |_|_| |_| |_|\___|_| |_|\__|___/   |_|
+*/
+      credits: lunar_limbo, original author: IMFUZZ
 ```
+Organize your code with large ASCII font comments to quickly idenfity your position in the file.
 
-Figlet Font Code Comments.
+By harnessing the power of node-figlet and the many customizations of this extension, you can easily segment your code using comments. Works especially well with minimaps.
 
-Use quick commands or stored configs to quickly add large banner comments using [figlet](https://www.npmjs.com/package/figlet).
+> _Improves upon IMFUZZ's work by adding more features and customization_
 
-Play around with **over 275+** _mostly_ useless ascii fonts in this [sandbox](http://patorjk.com/software/taag/)
+Deeply `customize` the output with prefix, suffix, perLinePrefix, and more. Use `commands` or `stored configs` to quickly add large banner comments using [figlet](https://www.npmjs.com/package/figlet). Using [geddski.macros](https://marketplace.visualstudio.com/items?itemName=geddski.macros) you can setup `keybinds` for your favorite configs
+
+Play around with **over 275+** _mostly_ useless ascii fonts in this [sandbox](http://patorjk.com/software/taag/). 
+
+**NEW!** Add your own .flf fonts for use with this extension. Create your own or download from the many sources online
+
 
 # Features
 
-- Will convert selection or current line into banner
+- Will convert selection(s) or current line(s) into banner
 - Use a default configuration or create multiple saved configs
 - Setup keybinds for your favorite configs using [geddski.macros](https://marketplace.visualstudio.com/items?itemName=geddski.macros) ([instructions below](#macro-configuration))
+- Deep customization: from Figlet's options, to comment styles, and even prefixes/suffixes
 
-## Commands
+## Examples
 
-### Apply - Converts selection or line into banner comment
+### i3 configuration
+
+![example: i3 config](images/i3Config.gif)  
+Using two configurations,  
+I can quickly identify  
+sections of my config using  
+the minimap and banner comments
+
+
+
+### vscode extension
+
+![example: vscode extension](images/extension.gif)  
+With code folding &  
+banner comments  
+parsing a code file is easy!
+
+
+
+
+# Commands
+
+## Apply - Converts selection or line into banner comment
 
 ![feature 'Apply'](images/apply.gif)
 
-### ApplyFromConfig - Convert selection or line using stored config
+
+## ApplyFromConfig - Convert selection or line using stored config
 
 ![feature 'ApplyFromConfig'](images/applyFromConfig.gif)
+
 
 ## Keybinds for configs - Apply configs with keybinds using [geddski.macros](https://marketplace.visualstudio.com/items?itemName=geddski.macros)
 
 ![feature 'Apply Config with Keybind'](images/keybinds.gif)
 
-### Supports multiple selections
+## Supports multiple selections
 
 ![feature 'Multiple Selections'](images/multi-selection.gif)
 
@@ -50,33 +84,36 @@ Play around with **over 275+** _mostly_ useless ascii fonts in this [sandbox](ht
 - **AddFontToFavorites"** - add a font to the favorites list
 - **AddCurrentFontToFavorites"** - add current default font to favorites list
 - **RemoveFontFromFavorites** - remove a font from favorites list
+- **AddCustomFont** - add your own .flf font file to the available list
+- **AddNewConfig** - create a new config using menus
 
 ## Extension Settings
 
-- `banner-comments-plus.font`: **<string\>** (name of Figlet font)
-- `banner-comments-plus.horizontalLayout`: **<string\>** ['default', full', 'fitted', 'controlled smushing', 'universal smushing']
-- `banner-comments-plus.verticalLayout`: **<string\>** ['default', full', 'fitted', 'controlled smushing', 'universal smushing']
-- `banner-comments-plus.trimTrailingWhitespace`: **<boolean\>** remove excess spaces at end of line?
-- `banner-comments-plus.trimEmptyLines`: **<boolean\>** remove lines with only spaces?
-- `banner-comments-plus.commentStyle`: **<string\>** How comments are used in the output ['block', 'line', 'both']
-- `banner-comments-plus.prefix`: **<string\>** string to place at beginning of result
-- `banner-comments-plus.suffix`: **<string\>** string to place at end of result
-- `banner-comments-plus.perLinePrefix`: **<string\>** string to place at beginning of each line
-- `banner-comments-plus.configs`: **<object\>** object with named configs (all other settings combine to create one config)
+- `font`: **<string\>** (name of Figlet font)
+- `horizontalLayout`: **<string\>** ['default', full', 'fitted', 'controlled smushing', 'universal smushing']
+- `verticalLayout`: **<string\>** ['default', full', 'fitted', 'controlled smushing', 'universal smushing']
+- `trimTrailingWhitespace`: **<boolean\>** remove excess spaces at end of line?
+- `trimEmptyLines`: **<boolean\>** remove lines with only spaces?
+- `commentStyle`: **<string\>** How comments are used in the output ['block', 'line', 'both']
+- `prefix`: **<string\>** string to place at beginning of result
+- `suffix`: **<string\>** string to place at end of result
+- `perLinePrefix`: **<string\>** string to place at beginning of each line
+- `customFonts`: **<string[]\>** array of absolute file paths to other .flf fonts
+- `configs`: **<object\>** object with named configs (all other settings combine to create one config)
 
 ### Figlet Settings
 
 The figlet settings can be best understood by playing with [this tool](http://patorjk.com/software/taag/)
 
-- `banner-comments-plus.font`
-- `banner-comments-plus.horizontalLayout`
-- `banner-comments-plus.verticalLayout`
+- `font`
+- `horizontalLayout`
+- `verticalLayout`
 
 ### Trim Settings
 
-- `banner-comments-plus.trimTrailingWhitespace`
+- `trimTrailingWhitespace`
   - to avoid lint traps
-- `banner-comments-plus.trimEmptyLines`
+- `trimEmptyLines`
   - often, fonts have extra lines for descenders even when none in output
   - get rid of them to clean up your result
   - OR don't and keep each output unfirom
@@ -97,9 +134,9 @@ These are rather straight forward. But remember these caveats:
 2. Use \n to add newlines
 3. perLinePrefix applied even without commentStyle line added
 
-- `banner-comments-plus.prefix`
-- `banner-comments-plus.suffix`
-- `banner-comments-plus.perLinePrefix`
+- `prefix`
+- `suffix`
+- `perLinePrefix`
 
 # Macro configuration
 
@@ -156,5 +193,26 @@ None!
 
 - Only the languages provided by vscode are supported to wrap the banner with comments.
 - Does not work with Markdown because of naming convention of extension from Microsoft
-
+- Adding a config through menus, you cannot set prefix, suffix, or perLineSuffix to '' as this value is reserved to sumbit an empty string
 -----------------------------------------------------------------------------------------------------------
+
+
+<style>
+    img { border: 1px dashed #666;}
+    h3 + p { margin-left: 1rem;}
+    #i3-configuration + p,
+    #vscode-extension + p
+     {
+        display:flex;
+        align-items: center;
+        flex-wrap:wrap;
+        flex:0 1 20%;
+        /* vertical-align: "middle"; */
+        /* border: 1px solid; */
+    }
+    #i3-configuration + p img,
+    #vscode-extension + p img {
+        height: 250px;
+        margin: 0 1rem 0rem 0;
+    }
+</style>
