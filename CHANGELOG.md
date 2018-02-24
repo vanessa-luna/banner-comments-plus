@@ -6,9 +6,6 @@ Adheres: [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-- Work with custom "languages" and their comment styles
-- if selection is multi line, only remove empty bottom lines...
-
 
 ## [0.3.0] - 2018-02-24
 
@@ -25,7 +22,16 @@ New Commands, New Font, and README updates 😁
 - fonts
   - "ANSI Slim" added
 
+### Fixed
 
+- Work with custom "languages" and their comment styles
+  - no longer limited to vscode implemented
+  - if multiple definitions of langConfig, picks first one to define comments
+  - aka, now works with markdown :)
+
+### ANSI Slim Example
+
+![example ANSI Slim font](images/ANSI_Slim_example.png)
 
 
 ## [0.2.3] - 2018-02-22

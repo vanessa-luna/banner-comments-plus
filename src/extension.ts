@@ -381,23 +381,24 @@ function getDefaultConfig(languageId) {
 function getCommentConfig(languageId:string):any {
     let langConfig:any = getLanguageConfig(languageId);
     if (!langConfig) console.warn("BannerComments+: Language Config Not Found.");
-    else             return langConfig.comments;
+    else {
+        if (langConfig instanceof Array) {
+            for (let lang of langConfig) {
+                if (lang.comments) return lang.comments;
+            }
+        } else return langConfig.comments;
+    }
     return null;
 }
 
 function getLanguageConfig(languageId:string):any {
 	var langConfig:any = null;
 	const excludedLanguagesIds:any[] = ["plaintext"];
-
 	if (!excludedLanguagesIds.includes(languageId)) {
-		let langConfigFilepath:string;
+        let langConfigFilepath:string;
+        let extsMatchingLang:any[] = [];
 		for (const _ext of vscode.extensions.all) {
-			if (
-                // FIXME: noticed by luna @ 2/22/2018, 11:47:27 AM
-                // remove startswith, and better capture language styles...
-                // start with python.. there is more than one language implementation
-				_ext.id.startsWith("vscode.") &&
-				_ext.packageJSON.contributes &&
+			if (_ext.packageJSON.contributes &&
 				_ext.packageJSON.contributes.languages
 			) {
 				const packageLangData:any = _ext.packageJSON.contributes.languages.find(
@@ -407,11 +408,24 @@ function getLanguageConfig(languageId:string):any {
 					langConfigFilepath = path.join(
 						_ext.extensionPath,
 						packageLangData.configuration
-					);
-					break;
+                    );
+                    extsMatchingLang.push(langConfigFilepath);
 				}
 			}
-		}
+        }
+        // if many definitions
+        if (extsMatchingLang.length > 1) {
+            let langConfigs:any[] = [];
+            for (let lang of extsMatchingLang){
+                if (!!lang && fs.existsSync(lang)) {
+                    langConfigs.push(commentJson.parse(
+                        fs.readFileSync(lang, "utf8")
+                    ));
+                }
+            }
+            return langConfigs;
+        }
+        // if only one definition
 		if (!!langConfigFilepath && fs.existsSync(langConfigFilepath)) {
 			/**
 			 * unfortunatly, some of vscode's language config contains
@@ -420,8 +434,8 @@ function getLanguageConfig(languageId:string):any {
 			langConfig = commentJson.parse(
 				fs.readFileSync(langConfigFilepath, "utf8")
 			);
-		}
-		return langConfig;
+            return langConfig;
+		} else return null;
 	}
 }
 

@@ -85,6 +85,7 @@ parsing a code file is easy!
 - **AddCurrentFontToFavorites"** - add current default font to favorites list
 - **RemoveFontFromFavorites** - remove a font from favorites list
 - **AddCustomFont** - add your own .flf font file to the available list
+- **RemoveCustomFont** - remove font file from custom list
 - **AddNewConfig** - create a new config using menus
 
 ## Extension Settings
@@ -117,6 +118,7 @@ The figlet settings can be best understood by playing with [this tool](http://pa
   - often, fonts have extra lines for descenders even when none in output
   - get rid of them to clean up your result
   - OR don't and keep each output unfirom
+  - NOTE: will remove ALL lines. Multi line banners will therefore ignore verticalLayout
 
 ### Comment Style
 
@@ -191,9 +193,10 @@ None!
 
 # Known Issues
 
-- Only the languages provided by vscode are supported to wrap the banner with comments.
-- Does not work with Markdown because of naming convention of extension from Microsoft
-- Adding a config through menus, you cannot set prefix, suffix, or perLineSuffix to '' as this value is reserved to sumbit an empty string
+~~- Only the languages provided by vscode are supported to wrap the banner with comments.~~
+~~- Does not work with Markdown because of naming convention of extension from Microsoft~~
+- trimEmptyLines removes ALL empty lines, therefore ignoring figlet.verticalLayout. Best used with single line banners
+- Adding a config through menus, you cannot set prefix, suffix, or perLineSuffix to double apostraphe ('') as this value is reserved to sumbit an empty string
 -----------------------------------------------------------------------------------------------------------
 
 
