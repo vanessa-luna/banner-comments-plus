@@ -3,7 +3,7 @@
     "displayName": "Banner Comments +",
     "description": "Organize your code with large ASCII font comments",
     "icon": "images/icon.png",
-    "version": "0.2.3",
+    "version": "0.3.0",
     "publisher": "lunarlimbo",
     "homepage": "https://github.com/vanessa-luna/banner-comments-plus/blob/master/README.md",
     "bugs": {
