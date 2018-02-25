@@ -6,6 +6,10 @@ Adheres: [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.3.1] - 2018-02-24
+
+Readme, icon, package updates for discoverability. Nothing more, sorry.
+
 
 ## [0.3.0] - 2018-02-24
 
