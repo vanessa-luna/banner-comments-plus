@@ -1,7 +1,7 @@
 {
     "name": "banner-comments-plus",
     "displayName": "Banner Comments +",
-    "description": "Organize your code with large ASCII font comments",
+    "description": "Customizable ASCII font comments to help organize your code",
     "icon": "images/icon.png",
     "version": "0.3.0",
     "publisher": "lunarlimbo",
@@ -21,7 +21,7 @@
         "comment",
         "header",
         "banner",
-        "title"
+        "figlet"
     ],
     "categories": [
         "Formatters",
