@@ -25,11 +25,13 @@ Play around with **over 275+** _mostly_ useless ascii fonts in this [sandbox](ht
 
 # Features
 
-- Will convert selection(s) or current line(s) into banner
+Designed primarily so you can save your favorite styles in reusable configs. Find your favorite figlet fonts and settings and assign them to a keyboard shortcut!
+
 - Use a default configuration or create multiple saved configs
 - Setup keybinds for your favorite configs using [geddski.macros](https://marketplace.visualstudio.com/items?itemName=geddski.macros) ([instructions below](#macro-configuration))
 - Deep customization: from Figlet's options, to comment styles, and even prefixes/suffixes
 - Add your own fonts to the available list
+- Will convert selection(s) or current line(s) into banner
 
 ## Examples
 
@@ -105,6 +107,19 @@ These are rather straight forward. But remember these caveats:
 - `prefix`
 - `suffix`
 - `perLinePrefix`
+
+### Font Settings
+
+`favorites` - store your favorite fonts in a list for easy selection with `ApplyFromFavorites`
+
+`customFonts` - list of paths to custom figlet font files you may download
+
+### Config Options
+
+`configDescriptionKeys` - a list of 'keys' which are shown when displaying `ApplyFromConfig` to add more data than simply the name
+
+`configs` - a list of configs saved for reuse with `ApplyFromConfig`, All settings in contributions can be added to a config. If a settings is not specified in a config, the default option is used. 
+
 
 # Macro configuration
 
